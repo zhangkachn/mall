@@ -38,13 +38,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader); // 拿到请求头的数据
-        if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
+        if (authHeader != null && authHeader.startsWith(this.tokenHead)) { // 判断是否已Bearer开头
             String authToken = authHeader.substring(this.tokenHead.length());// The part after "Bearer "
-            String username = jwtTokenUtil.getUserNameFromToken(authToken);
+            String username = jwtTokenUtil.getUserNameFromToken(authToken); // 获取用户名
             LOGGER.info("checking username:{}", username);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {  // getAuthentication（）返回了认证信息，getPrincipal（）返回了身份信息
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                if (jwtTokenUtil.validateToken(authToken, userDetails)) {// 验证token是否还有效
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     LOGGER.info("authenticated user:{}", username);

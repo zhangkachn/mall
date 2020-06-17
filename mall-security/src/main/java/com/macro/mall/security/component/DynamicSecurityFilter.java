@@ -20,6 +20,7 @@ import java.io.IOException;
  */
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
+    // 动态权限数据源
     @Autowired
     private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
     @Autowired
@@ -52,10 +53,13 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
             }
         }
         //此处会调用AccessDecisionManager中的decide方法进行鉴权操作
+        // 获取accessDecisionManager权限决策后结果状态、以及权限属性
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {
+            // 请求真正的controller
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         } finally {
+            //获取请求后的操作
             super.afterInvocation(token, null);
         }
     }

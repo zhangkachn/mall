@@ -68,11 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-    // 用户登录
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder());// 密码加密和盐
     }
 
     @Bean

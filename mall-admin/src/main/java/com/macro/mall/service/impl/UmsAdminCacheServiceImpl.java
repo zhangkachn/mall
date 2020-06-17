@@ -101,6 +101,7 @@ public class UmsAdminCacheServiceImpl implements UmsAdminCacheService {
         redisService.set(key, admin, REDIS_EXPIRE);
     }
 
+    // 所有的资源权限列表
     @Override
     public List<UmsResource> getResourceList(Long adminId) {
         String key = REDIS_DATABASE + ":" + REDIS_KEY_RESOURCE_LIST + ":" + adminId;

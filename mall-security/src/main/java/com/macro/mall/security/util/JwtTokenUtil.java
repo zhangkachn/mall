@@ -30,17 +30,17 @@ public class JwtTokenUtil {
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
     @Value("${jwt.secret}")
-    private String secret;
+    private String secret; // 加密解密的秘钥
     @Value("${jwt.expiration}")
-    private Long expiration;
+    private Long expiration; // JWT的超期限时间(60*60*24*7)
     @Value("${jwt.tokenHead}")
-    private String tokenHead;
+    private String tokenHead; // JWT负载中拿到开头
 
     /**
      * 根据负责生成JWT的token
      */
     private String generateToken(Map<String, Object> claims) {
-        return Jwts.builder()
+        return Jwts.builder() //// 创建 JWT 对象
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret)
@@ -53,10 +53,10 @@ public class JwtTokenUtil {
     private Claims getClaimsFromToken(String token) {
         Claims claims = null;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
+            claims = Jwts.parser()  // 创建解析对象
+                    .setSigningKey(secret) // 设置安全密钥（生成签名所需的密钥和算法）
+                    .parseClaimsJws(token)  // 解析token
+                    .getBody(); // 获取 payload 部分内容
         } catch (Exception e) {
             LOGGER.info("JWT格式验证失败:{}", token);
         }

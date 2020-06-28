@@ -21,6 +21,7 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
     @Autowired
     private DynamicSecurityService dynamicSecurityService;
 
+    // @PostConstruct注解的方法将会在依赖注入完成后被自动调用
     @PostConstruct
     public void loadDataSource() {
         configAttributeMap = dynamicSecurityService.loadDataSource();

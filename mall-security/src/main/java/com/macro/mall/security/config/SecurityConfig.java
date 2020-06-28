@@ -121,9 +121,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+    // 动态权限过滤器，用于实现基于路径的动态权限过滤
     @ConditionalOnBean(name = "dynamicSecurityService")
     @Bean
-    // 动态权限过滤器，用于实现基于路径的动态权限过滤
     public DynamicSecurityFilter dynamicSecurityFilter() {
         return new DynamicSecurityFilter();
     }

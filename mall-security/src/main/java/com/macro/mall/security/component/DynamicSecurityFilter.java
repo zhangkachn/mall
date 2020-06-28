@@ -20,7 +20,7 @@ import java.io.IOException;
  */
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
-    // 动态权限数据源
+    //动态权限数据源
     @Autowired
     private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
     @Autowired
@@ -73,6 +73,7 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
         return FilterInvocation.class;
     }
 
+    // 返回数据源
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
         return dynamicSecurityMetadataSource;

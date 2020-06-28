@@ -31,4 +31,7 @@ public class CmsPrefrenceAreaController {
         List<CmsPrefrenceArea> prefrenceAreaList = prefrenceAreaService.listAll();
         return CommonResult.success(prefrenceAreaList);
     }
+
+
+
 }

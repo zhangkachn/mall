@@ -37,6 +37,7 @@ public class MallSecurityConfig extends SecurityConfig {
         return username -> adminService.loadUserByUsername(username);        // 这里是数据的查询
     }
 
+    // 加载资源ANT通配符和资源对应MAP
     @Bean
     public DynamicSecurityService dynamicSecurityService() {
         return new DynamicSecurityService() {
@@ -45,6 +46,7 @@ public class MallSecurityConfig extends SecurityConfig {
                 Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
                 List<UmsResource> resourceList = resourceService.listAll();
                 for (UmsResource resource : resourceList) {
+                    new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName());
                     map.put(resource.getUrl(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
                 }
                 return map;
